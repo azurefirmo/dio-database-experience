@@ -8,22 +8,22 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema ECommerce
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `mydb` ;
+DROP SCHEMA IF EXISTS `ECommerce` ;
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema ECommerce
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `ECommerce` DEFAULT CHARACTER SET utf8 ;
+USE `ECommerce` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`PessoasFísicas`
+-- Table `ECommerce`.`PessoasFísicas`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`PessoasFísicas` ;
+DROP TABLE IF EXISTS `ECommerce`.`PessoasFísicas` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`PessoasFísicas` (
+CREATE TABLE IF NOT EXISTS `ECommerce`.`PessoasFísicas` (
   `idPessoaFísica` INT NOT NULL,
   `nome` VARCHAR(45) NULL,
   `cpf` VARCHAR(45) NULL,
@@ -32,11 +32,11 @@ CREATE TABLE IF NOT EXISTS `mydb`.`PessoasFísicas` (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `mydb`.`PessoasJurídicas`
+-- Table `ECommerce`.`PessoasJurídicas`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`PessoasJurídicas` ;
+DROP TABLE IF EXISTS `ECommerce`.`PessoasJurídicas` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`PessoasJurídicas` (
+CREATE TABLE IF NOT EXISTS `ECommerce`.`PessoasJurídicas` (
   `idPessoaJurídica` INT NOT NULL,
   `nome` VARCHAR(45) NULL,
   `cnpj` VARCHAR(45) NULL,
@@ -45,11 +45,11 @@ CREATE TABLE IF NOT EXISTS `mydb`.`PessoasJurídicas` (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `mydb`.`Clientes`
+-- Table `ECommerce`.`Clientes`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Clientes` ;
+DROP TABLE IF EXISTS `ECommerce`.`Clientes` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Clientes` (
+CREATE TABLE IF NOT EXISTS `ECommerce`.`Clientes` (
   `idCliente` INT NOT NULL,
   `identificação` VARCHAR(45) NULL,
   `PessoasFísicas_idPessoaFísica` INT NOT NULL,
@@ -59,22 +59,22 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Clientes` (
   INDEX `fk_Clientes_PessoasJurídicas1_idx` (`PessoasJurídicas_idPessoaJurídica` ASC) VISIBLE,
   CONSTRAINT `fk_Clientes_PessoasFísicas1`
     FOREIGN KEY (`PessoasFísicas_idPessoaFísica`)
-    REFERENCES `mydb`.`PessoasFísicas` (`idPessoaFísica`)
+    REFERENCES `ECommerce`.`PessoasFísicas` (`idPessoaFísica`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Clientes_PessoasJurídicas1`
     FOREIGN KEY (`PessoasJurídicas_idPessoaJurídica`)
-    REFERENCES `mydb`.`PessoasJurídicas` (`idPessoaJurídica`)
+    REFERENCES `ECommerce`.`PessoasJurídicas` (`idPessoaJurídica`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `mydb`.`Pedidos`
+-- Table `ECommerce`.`Pedidos`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Pedidos` ;
+DROP TABLE IF EXISTS `ECommerce`.`Pedidos` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Pedidos` (
+CREATE TABLE IF NOT EXISTS `ECommerce`.`Pedidos` (
   `idPedidos` INT NOT NULL,
   `statusDoPedido` VARCHAR(45) NULL,
   `descrição` VARCHAR(45) NULL,
@@ -84,17 +84,17 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Pedidos` (
   INDEX `fk_Pedidos_Clientes1_idx` (`Clientes_idCliente` ASC) VISIBLE,
   CONSTRAINT `fk_Pedidos_Clientes1`
     FOREIGN KEY (`Clientes_idCliente`)
-    REFERENCES `mydb`.`Clientes` (`idCliente`)
+    REFERENCES `ECommerce`.`Clientes` (`idCliente`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `mydb`.`Produtos`
+-- Table `ECommerce`.`Produtos`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Produtos` ;
+DROP TABLE IF EXISTS `ECommerce`.`Produtos` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Produtos` (
+CREATE TABLE IF NOT EXISTS `ECommerce`.`Produtos` (
   `idProduto` INT NOT NULL,
   `categoria` VARCHAR(45) NULL,
   `descrição` VARCHAR(45) NULL,
@@ -103,11 +103,11 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Produtos` (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `mydb`.`Fornecedores`
+-- Table `ECommerce`.`Fornecedores`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Fornecedores` ;
+DROP TABLE IF EXISTS `ECommerce`.`Fornecedores` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Fornecedores` (
+CREATE TABLE IF NOT EXISTS `ECommerce`.`Fornecedores` (
   `idFornecedor` INT NOT NULL,
   `razaoSocial` VARCHAR(45) NULL,
   `cnpj` VARCHAR(45) NULL,
@@ -115,11 +115,11 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Fornecedores` (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `mydb`.`DisponibilidadesDeProdutos`
+-- Table `ECommerce`.`DisponibilidadesDeProdutos`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`DisponibilidadesDeProdutos` ;
+DROP TABLE IF EXISTS `ECommerce`.`DisponibilidadesDeProdutos` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`DisponibilidadesDeProdutos` (
+CREATE TABLE IF NOT EXISTS `ECommerce`.`DisponibilidadesDeProdutos` (
   `Fornecedores_idFornecedor` INT NOT NULL,
   `Produtos_idProduto` INT NOT NULL,
   PRIMARY KEY (`Fornecedores_idFornecedor`, `Produtos_idProduto`),
@@ -127,33 +127,33 @@ CREATE TABLE IF NOT EXISTS `mydb`.`DisponibilidadesDeProdutos` (
   INDEX `fk_Fornecedores_has_Produtos_Fornecedor_idx` (`Fornecedores_idFornecedor` ASC) VISIBLE,
   CONSTRAINT `fk_Fornecedores_has_Produtos_Fornecedor`
     FOREIGN KEY (`Fornecedores_idFornecedor`)
-    REFERENCES `mydb`.`Fornecedores` (`idFornecedor`)
+    REFERENCES `ECommerce`.`Fornecedores` (`idFornecedor`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Fornecedores_has_Produtos_Produtos1`
     FOREIGN KEY (`Produtos_idProduto`)
-    REFERENCES `mydb`.`Produtos` (`idProduto`)
+    REFERENCES `ECommerce`.`Produtos` (`idProduto`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `mydb`.`Estoques`
+-- Table `ECommerce`.`Estoques`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Estoques` ;
+DROP TABLE IF EXISTS `ECommerce`.`Estoques` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Estoques` (
+CREATE TABLE IF NOT EXISTS `ECommerce`.`Estoques` (
   `idEstoque` INT NOT NULL,
   `Local` VARCHAR(45) NULL,
   PRIMARY KEY (`idEstoque`))
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `mydb`.`Produtos/Estoques`
+-- Table `ECommerce`.`Produtos/Estoques`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Produtos/Estoques` ;
+DROP TABLE IF EXISTS `ECommerce`.`Produtos/Estoques` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Produtos/Estoques` (
+CREATE TABLE IF NOT EXISTS `ECommerce`.`Produtos/Estoques` (
   `Produtos_idProduto` INT NOT NULL,
   `Estoques_idEstoque` INT NOT NULL,
   `quantidade` INT NULL,
@@ -162,22 +162,22 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Produtos/Estoques` (
   INDEX `fk_Produtos_has_Estoques_Produtos1_idx` (`Produtos_idProduto` ASC) VISIBLE,
   CONSTRAINT `fk_Produtos_has_Estoques_Produtos1`
     FOREIGN KEY (`Produtos_idProduto`)
-    REFERENCES `mydb`.`Produtos` (`idProduto`)
+    REFERENCES `ECommerce`.`Produtos` (`idProduto`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Produtos_has_Estoques_Estoques1`
     FOREIGN KEY (`Estoques_idEstoque`)
-    REFERENCES `mydb`.`Estoques` (`idEstoque`)
+    REFERENCES `ECommerce`.`Estoques` (`idEstoque`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `mydb`.`Relações de Produtos/Pedidos`
+-- Table `ECommerce`.`Relações de Produtos/Pedidos`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Relações de Produtos/Pedidos` ;
+DROP TABLE IF EXISTS `ECommerce`.`Relações de Produtos/Pedidos` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Relações de Produtos/Pedidos` (
+CREATE TABLE IF NOT EXISTS `ECommerce`.`Relações de Produtos/Pedidos` (
   `Pedidos_idPedidos` INT NOT NULL,
   `Produtos_idProduto` INT NOT NULL,
   `quantidade` VARCHAR(45) NULL,
@@ -186,22 +186,22 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Relações de Produtos/Pedidos` (
   INDEX `fk_Pedidos_has_Produtos_Pedidos1_idx` (`Pedidos_idPedidos` ASC) VISIBLE,
   CONSTRAINT `fk_Pedidos_has_Produtos_Pedidos1`
     FOREIGN KEY (`Pedidos_idPedidos`)
-    REFERENCES `mydb`.`Pedidos` (`idPedidos`)
+    REFERENCES `ECommerce`.`Pedidos` (`idPedidos`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Pedidos_has_Produtos_Produtos1`
     FOREIGN KEY (`Produtos_idProduto`)
-    REFERENCES `mydb`.`Produtos` (`idProduto`)
+    REFERENCES `ECommerce`.`Produtos` (`idProduto`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `mydb`.`Terceirizados`
+-- Table `ECommerce`.`Terceirizados`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Terceirizados` ;
+DROP TABLE IF EXISTS `ECommerce`.`Terceirizados` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Terceirizados` (
+CREATE TABLE IF NOT EXISTS `ECommerce`.`Terceirizados` (
   `idTerceirizado` INT NOT NULL,
   `razãoSocial` VARCHAR(45) NULL,
   `endereço` VARCHAR(45) NULL,
@@ -209,11 +209,11 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Terceirizados` (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `mydb`.`Produtos por Terceirizados`
+-- Table `ECommerce`.`Produtos por Terceirizados`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Produtos por Terceirizados` ;
+DROP TABLE IF EXISTS `ECommerce`.`Produtos por Terceirizados` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Produtos por Terceirizados` (
+CREATE TABLE IF NOT EXISTS `ECommerce`.`Produtos por Terceirizados` (
   `Terceirizados_idTerceirizado` INT NOT NULL,
   `Produtos_idProduto` INT NOT NULL,
   `quantidade` INT NULL,
@@ -222,22 +222,22 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Produtos por Terceirizados` (
   INDEX `fk_Terceirizados_has_Produtos_Terceirizados1_idx` (`Terceirizados_idTerceirizado` ASC) VISIBLE,
   CONSTRAINT `fk_Terceirizados_has_Produtos_Terceirizados1`
     FOREIGN KEY (`Terceirizados_idTerceirizado`)
-    REFERENCES `mydb`.`Terceirizados` (`idTerceirizado`)
+    REFERENCES `ECommerce`.`Terceirizados` (`idTerceirizado`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Terceirizados_has_Produtos_Produtos1`
     FOREIGN KEY (`Produtos_idProduto`)
-    REFERENCES `mydb`.`Produtos` (`idProduto`)
+    REFERENCES `ECommerce`.`Produtos` (`idProduto`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `mydb`.`Pagamentos`
+-- Table `ECommerce`.`Pagamentos`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Pagamentos` ;
+DROP TABLE IF EXISTS `ECommerce`.`Pagamentos` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Pagamentos` (
+CREATE TABLE IF NOT EXISTS `ECommerce`.`Pagamentos` (
   `idPagamento` INT NOT NULL,
   `formaDePagamento` INT NULL,
   `Pedidos_idPedidos` INT NOT NULL,
@@ -246,17 +246,17 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Pagamentos` (
   INDEX `fk_Pagamentos_Pedidos1_idx` (`Pedidos_idPedidos` ASC, `Pedidos_Clientes_idCliente` ASC) VISIBLE,
   CONSTRAINT `fk_Pagamentos_Pedidos1`
     FOREIGN KEY (`Pedidos_idPedidos` , `Pedidos_Clientes_idCliente`)
-    REFERENCES `mydb`.`Pedidos` (`idPedidos` , `Clientes_idCliente`)
+    REFERENCES `ECommerce`.`Pedidos` (`idPedidos` , `Clientes_idCliente`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `mydb`.`Entregas`
+-- Table `ECommerce`.`Entregas`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Entregas` ;
+DROP TABLE IF EXISTS `ECommerce`.`Entregas` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Entregas` (
+CREATE TABLE IF NOT EXISTS `ECommerce`.`Entregas` (
   `idEntrega` INT NOT NULL,
   `descrição` VARCHAR(45) NULL,
   `dataDoPedido` DATE NULL,
@@ -269,17 +269,17 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Entregas` (
   INDEX `fk_Entregas_Pedidos1_idx` (`Pedidos_idPedidos` ASC, `Pedidos_Clientes_idCliente` ASC) VISIBLE,
   CONSTRAINT `fk_Entregas_Pedidos1`
     FOREIGN KEY (`Pedidos_idPedidos` , `Pedidos_Clientes_idCliente`)
-    REFERENCES `mydb`.`Pedidos` (`idPedidos` , `Clientes_idCliente`)
+    REFERENCES `ECommerce`.`Pedidos` (`idPedidos` , `Clientes_idCliente`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `mydb`.`PIX`
+-- Table `ECommerce`.`PIX`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`PIX` ;
+DROP TABLE IF EXISTS `ECommerce`.`PIX` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`PIX` (
+CREATE TABLE IF NOT EXISTS `ECommerce`.`PIX` (
   `idPIX` INT NOT NULL,
   `valor` FLOAT NULL,
   `dataDoPagamento` DATE NULL,
@@ -290,17 +290,17 @@ CREATE TABLE IF NOT EXISTS `mydb`.`PIX` (
   INDEX `fk_PIX_Pagamentos1_idx` (`Pagamentos_idPagamento` ASC, `Pagamentos_Pedidos_idPedidos` ASC, `Pagamentos_Pedidos_Clientes_idCliente` ASC) VISIBLE,
   CONSTRAINT `fk_PIX_Pagamentos1`
     FOREIGN KEY (`Pagamentos_idPagamento` , `Pagamentos_Pedidos_idPedidos` , `Pagamentos_Pedidos_Clientes_idCliente`)
-    REFERENCES `mydb`.`Pagamentos` (`idPagamento` , `Pedidos_idPedidos` , `Pedidos_Clientes_idCliente`)
+    REFERENCES `ECommerce`.`Pagamentos` (`idPagamento` , `Pedidos_idPedidos` , `Pedidos_Clientes_idCliente`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `mydb`.`Boletos`
+-- Table `ECommerce`.`Boletos`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Boletos` ;
+DROP TABLE IF EXISTS `ECommerce`.`Boletos` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Boletos` (
+CREATE TABLE IF NOT EXISTS `ECommerce`.`Boletos` (
   `idBoleto` INT NOT NULL,
   `valor` FLOAT NULL,
   `dataDoPagamento` DATE NULL,
@@ -311,17 +311,17 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Boletos` (
   INDEX `fk_Boleto_Pagamentos1_idx` (`Pagamentos_idPagamento` ASC, `Pagamentos_Pedidos_idPedidos` ASC, `Pagamentos_Pedidos_Clientes_idCliente` ASC) VISIBLE,
   CONSTRAINT `fk_Boleto_Pagamentos1`
     FOREIGN KEY (`Pagamentos_idPagamento` , `Pagamentos_Pedidos_idPedidos` , `Pagamentos_Pedidos_Clientes_idCliente`)
-    REFERENCES `mydb`.`Pagamentos` (`idPagamento` , `Pedidos_idPedidos` , `Pedidos_Clientes_idCliente`)
+    REFERENCES `ECommerce`.`Pagamentos` (`idPagamento` , `Pedidos_idPedidos` , `Pedidos_Clientes_idCliente`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `mydb`.`Cartões`
+-- Table `ECommerce`.`Cartões`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Cartões` ;
+DROP TABLE IF EXISTS `ECommerce`.`Cartões` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`Cartões` (
+CREATE TABLE IF NOT EXISTS `ECommerce`.`Cartões` (
   `idCartão` INT NOT NULL,
   `tipoDoCartão` VARCHAR(45) NULL,
   `dataDoPagamento` DATE NULL,
@@ -334,7 +334,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Cartões` (
   INDEX `fk_Cartões_Pagamentos1_idx` (`Pagamentos_idPagamento` ASC, `Pagamentos_Pedidos_idPedidos` ASC, `Pagamentos_Pedidos_Clientes_idCliente` ASC) VISIBLE,
   CONSTRAINT `fk_Cartões_Pagamentos1`
     FOREIGN KEY (`Pagamentos_idPagamento` , `Pagamentos_Pedidos_idPedidos` , `Pagamentos_Pedidos_Clientes_idCliente`)
-    REFERENCES `mydb`.`Pagamentos` (`idPagamento` , `Pedidos_idPedidos` , `Pedidos_Clientes_idCliente`)
+    REFERENCES `ECommerce`.`Pagamentos` (`idPagamento` , `Pedidos_idPedidos` , `Pedidos_Clientes_idCliente`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
